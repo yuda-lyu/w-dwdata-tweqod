@@ -94,7 +94,7 @@ describe('WDwdataTweqod', function() {
             // console.log('change', msg)
             ms.push(msg)
             if (msg.event === 'end') {
-                console.log('ms', ms)
+                // console.log('ms', ms)
                 pm.resolve(ms)
             }
         })
