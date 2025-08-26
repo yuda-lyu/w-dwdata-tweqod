@@ -316,7 +316,6 @@ let WDwdataTweqod = async(token, opt = {}) => {
     let funRemoveDef = async(v) => {
 
         let fd = `${fdResult}/${v.id}`
-
         if (fsIsFolder(fd)) {
             fsDeleteFolder(fd)
         }
@@ -330,10 +329,10 @@ let WDwdataTweqod = async(token, opt = {}) => {
     let funAddDef = async(v) => {
 
         let fd = `${fdResult}/${v.id}`
-
-        if (fsIsFolder(fd)) {
-            fsCleanFolder(fd)
+        if (!fsIsFolder(fd)) {
+            fsCreateFolder(fd)
         }
+        fsCleanFolder(fd)
 
         let fpStorage = `${fdDwStorage}/${v.id}.json`
         let fpResult = `${fd}/${v.id}.json`
@@ -348,10 +347,10 @@ let WDwdataTweqod = async(token, opt = {}) => {
     let funModifyDef = async(v) => {
 
         let fd = `${fdResult}/${v.id}`
-
-        if (fsIsFolder(fd)) {
-            fsCleanFolder(fd)
+        if (!fsIsFolder(fd)) {
+            fsCreateFolder(fd)
         }
+        fsCleanFolder(fd)
 
         let fpStorage = `${fdDwStorage}/${v.id}.json`
         let fpResult = `${fd}/${v.id}.json`
