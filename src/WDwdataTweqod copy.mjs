@@ -10,9 +10,9 @@ import haskey from 'wsemi/src/haskey.mjs'
 import pmSeries from 'wsemi/src/pmSeries.mjs'
 import fsIsFolder from 'wsemi/src/fsIsFolder.mjs'
 import fsCopyFile from 'wsemi/src/fsCopyFile.mjs'
+import fsDeleteFile from 'wsemi/src/fsDeleteFile.mjs'
 import fsCleanFolder from 'wsemi/src/fsCleanFolder.mjs'
 import fsCreateFolder from 'wsemi/src/fsCreateFolder.mjs'
-import fsDeleteFolder from 'wsemi/src/fsDeleteFolder.mjs'
 import fsTreeFolder from 'wsemi/src/fsTreeFolder.mjs'
 import fsGetFileXxHash from 'wsemi/src/fsGetFileXxHash.mjs'
 import WDwdataBuilder from 'w-dwdata-builder/src/WDwdataBuilder.mjs'
@@ -315,10 +315,9 @@ let WDwdataTweqod = async(token, opt = {}) => {
     //funRemoveDef
     let funRemoveDef = async(v) => {
 
-        let fd = `${fdResult}/${v.id}`
-        if (fsIsFolder(fd)) {
-            fsDeleteFolder(fd)
-        }
+        //fdResult內儲存地震id的json檔, 須刪除
+        let fpTar = `${fdResult}/${v.id}.json`
+        fsDeleteFile(fpTar)
 
     }
     if (!isfun(funRemove)) {
@@ -328,14 +327,9 @@ let WDwdataTweqod = async(token, opt = {}) => {
     //funAddDef
     let funAddDef = async(v) => {
 
-        let fd = `${fdResult}/${v.id}`
-        if (!fsIsFolder(fd)) {
-            fsCreateFolder(fd)
-        }
-        fsCleanFolder(fd)
-
+        //解析後地震數據放在fdDwStorage, 須複製至fdResult
         let fpSrc = `${fdDwStorage}/${v.id}.json`
-        let fpTar = `${fd}/${v.id}.json`
+        let fpTar = `${fdResult}/${v.id}.json`
         fsCopyFile(fpSrc, fpTar)
 
     }
@@ -346,14 +340,9 @@ let WDwdataTweqod = async(token, opt = {}) => {
     //funModifyDef
     let funModifyDef = async(v) => {
 
-        let fd = `${fdResult}/${v.id}`
-        if (!fsIsFolder(fd)) {
-            fsCreateFolder(fd)
-        }
-        fsCleanFolder(fd)
-
+        //解析後地震數據放在fdDwStorage, 須複製至fdResult
         let fpSrc = `${fdDwStorage}/${v.id}.json`
-        let fpTar = `${fd}/${v.id}.json`
+        let fpTar = `${fdResult}/${v.id}.json`
         fsCopyFile(fpSrc, fpTar)
 
     }
