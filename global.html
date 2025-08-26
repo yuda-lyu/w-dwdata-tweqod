@@ -146,6 +146,735 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
+        <a href="WDwdataTweqod%20copy.mjs.html">WDwdataTweqod copy.mjs</a>, <a href="WDwdataTweqod%20copy.mjs.html#line101">line 101</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-examples">Example</h5>
+    
+    <pre class="prettyprint"><code>import fs from 'fs'import _ from 'lodash-es'import w from 'wsemi'import WDwdataTweqod from './src/WDwdataTweqod.mjs'let j = fs.readFileSync('../_data/settings.json', 'utf8')let st = JSON.parse(j)let token = _.get(st, 'token')//fdDwStoragelet fdDwStorage = `./_dwStorage`w.fsCleanFolder(fdDwStorage)//fdDwAttimelet fdDwAttime = `./_dwAttime`w.fsCleanFolder(fdDwAttime)//fdDwCurrentlet fdDwCurrent = `./_dwCurrent`w.fsCleanFolder(fdDwCurrent)//fdResultlet fdResult = './_result'w.fsCleanFolder(fdResult)let opt = {    fdDwStorage,    fdDwAttime,    fdDwCurrent,    fdResult,    // funDownload,    // funGetCurrent,    // funRemove,    // funAdd,    // funModify,}let ev = await WDwdataTweqod(token, opt)    .catch((err) => {        console.log(err)    })ev.on('change', (msg) => {    delete msg.type    console.log('change', msg)})// change { event: 'start', msg: 'running...' }// change { event: 'proc-callfun-download', msg: 'start...' }// change { event: 'proc-callfun-download', msg: 'done' }// change { event: 'proc-callfun-getCurrent', msg: 'start...' }// change { event: 'proc-callfun-getCurrent', msg: 'done' }// change { event: 'compare', msg: 'start...' }// change { event: 'compare', msg: 'done' }// change { event: 'proc-add-callfun-add', id: '114101', msg: 'start...' }// change { event: 'proc-add-callfun-add', id: '114101', msg: 'done' }// change { event: 'proc-add-callfun-add', id: '114102', msg: 'start...' }// change { event: 'proc-add-callfun-add', id: '114102', msg: 'done' }// ...</code></pre>
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>token</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>輸入氣象署OpenData之API用token字串</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>opt</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>{}</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>輸入設定物件，預設{}</p>
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>fdDwStorage</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>'./_dwStorage'</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>輸入完整下載數據資料夾字串，預設'./_dwStorage'</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>fdDwAttime</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>'./_dwAttime'</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>輸入當前下載供比對hash用之數據資料夾字串，預設'./_dwAttime'</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>fdDwCurrent</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>'./_dwCurrent'</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>輸入已下載供比對hash用之數據資料夾字串，預設'./_dwCurrent'</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>fdResult</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>'./_result'</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>輸入已下載數據所連動生成數據資料夾字串，預設'./_result'</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>fdTaskCpSrc</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>'./_taskCpSrc'</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>輸入任務狀態之來源端資料夾字串，預設'./_taskCpSrc'</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>fdLog</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>'./_logs'</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>輸入儲存log資料夾字串，預設'./_logs'</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>funDownloadEqs</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>null</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>輸入自定義下載地震數據函數，回傳資料陣列，預設null</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>funDownload</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>null</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>輸入自定義當前下載之hash數據處理函數，回傳資料陣列，預設null</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>funGetCurrent</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>null</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>輸入自定義已下載之hash數據處理函數，回傳資料陣列，預設null</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>funAdd</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>null</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>輸入當有新資料時，需要連動處理之函數，預設null</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>funModify</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>null</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>輸入當有資料需更新時，需要連動處理之函數，預設null</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>funRemove</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>null</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>輸入當有資料需刪除時，需要連動處理之函數，預設null</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 class="h5-returns">Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>回傳事件物件，可呼叫函數on監聽change事件</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Object</span>
+
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="WDwdataTweqod"><span class="type-signature type-signature-async">(async) </span>WDwdataTweqod<span class="signature">(token, opt<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>於OpenData下載台灣氣象署地震資料</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
         <a href="WDwdataTweqod.mjs.html">WDwdataTweqod.mjs</a>, <a href="WDwdataTweqod.mjs.html#line101">line 101</a>
     </li></ul></dd>
     
@@ -874,7 +1603,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.4</a> on Tue Aug 26 2025 14:55:34 GMT+0800 (台北標準時間) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.4</a> on Tue Aug 26 2025 15:02:59 GMT+0800 (台北標準時間) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
