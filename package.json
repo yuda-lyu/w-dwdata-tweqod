@@ -1,6 +1,6 @@
 {
   "name": "w-dwdata-tweqod",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "main": "dist/w-dwdata-tweqod.umd.js",
   "dependencies": {
     "axios": "^1.11.0",
