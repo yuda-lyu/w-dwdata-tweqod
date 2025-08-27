@@ -1,5 +1,6 @@
 import get from 'lodash-es/get.js'
 import each from 'lodash-es/each.js'
+import isbol from 'wsemi/src/isbol.mjs'
 import isnum from 'wsemi/src/isnum.mjs'
 import isearr from 'wsemi/src/isearr.mjs'
 import isestr from 'wsemi/src/isestr.mjs'
@@ -9,7 +10,7 @@ import ot from 'dayjs'
 import axios from 'axios'
 
 
-let downloadEqs = async(token) => {
+let downloadEqs = async(token, opt = {}) => {
     let errTemp = null
 
     // 氣象開放資料平台(使用氣象署帳密)
@@ -23,6 +24,12 @@ let downloadEqs = async(token) => {
 
     // 小區域有感地震報告資料-小區域有感地震報告API(GET):
     // https://opendata.cwa.gov.tw/api/v1/rest/datastore/E-A0016-001?Authorization={token}
+
+    //keepAllData
+    let keepAllData = get(opt, 'keepAllData')
+    if (!isbol(keepAllData)) {
+        keepAllData = true
+    }
 
     //get, 顯著有感地震
     let rEqsL = await axios.get(`https://opendata.cwa.gov.tw/api/v1/rest/datastore/E-A0015-001?Authorization=${token}`)
@@ -150,9 +157,11 @@ let downloadEqs = async(token) => {
             description, //地震描述
             location, //地震位置
             intensity: '', //最大震度
-            longitude,
-            latitude,
-            data: v,
+            longitude, //經度WGS84
+            latitude, //緯度WGS84
+        }
+        if (keepAllData) {
+            eq.data = v
         }
 
         //push

@@ -3,6 +3,7 @@ import get from 'lodash-es/get.js'
 import each from 'lodash-es/each.js'
 import reverse from 'lodash-es/reverse.js'
 import values from 'lodash-es/values.js'
+import isbol from 'wsemi/src/isbol.mjs'
 import isestr from 'wsemi/src/isestr.mjs'
 import isfun from 'wsemi/src/isfun.mjs'
 import ispm from 'wsemi/src/ispm.mjs'
@@ -12,12 +13,12 @@ import fsIsFolder from 'wsemi/src/fsIsFolder.mjs'
 import fsCopyFile from 'wsemi/src/fsCopyFile.mjs'
 import fsCleanFolder from 'wsemi/src/fsCleanFolder.mjs'
 import fsCreateFolder from 'wsemi/src/fsCreateFolder.mjs'
+import fsCopyFolder from 'wsemi/src/fsCopyFolder.mjs'
 import fsDeleteFolder from 'wsemi/src/fsDeleteFolder.mjs'
 import fsTreeFolder from 'wsemi/src/fsTreeFolder.mjs'
 import fsGetFileXxHash from 'wsemi/src/fsGetFileXxHash.mjs'
 import WDwdataBuilder from 'w-dwdata-builder/src/WDwdataBuilder.mjs'
 import downloadEqs from './downloadEqs.mjs'
-import fsCopyFolder from 'wsemi/src/fsCopyFolder.mjs'
 
 
 /**
@@ -25,6 +26,7 @@ import fsCopyFolder from 'wsemi/src/fsCopyFolder.mjs'
  *
  * @param {String} token 輸入氣象署OpenData之API用token字串
  * @param {Object} [opt={}] 輸入設定物件，預設{}
+ * @param {Boolean} [opt.keepAllData=true] 輸入是否儲存全部資料，氣象署地震資料內Intensity可能常變更而觸發事件，可設定keepAllData=false只基於重要數據進行偵測。預設true
  * @param {String} [opt.fdDwStorage='./_dwStorage'] 輸入完整下載數據資料夾字串，預設'./_dwStorage'
  * @param {String} [opt.fdDwAttime='./_dwAttime'] 輸入當前下載供比對hash用之數據資料夾字串，預設'./_dwAttime'
  * @param {String} [opt.fdDwCurrent='./_dwCurrent'] 輸入已下載供比對hash用之數據資料夾字串，預設'./_dwCurrent'
@@ -99,6 +101,12 @@ import fsCopyFolder from 'wsemi/src/fsCopyFolder.mjs'
  *
  */
 let WDwdataTweqod = async(token, opt = {}) => {
+
+    //keepAllData
+    let keepAllData = get(opt, 'keepAllData')
+    if (!isbol(keepAllData)) {
+        keepAllData = true
+    }
 
     //fdDwStorage
     let fdDwStorage = get(opt, 'fdDwStorage')
@@ -205,7 +213,7 @@ let WDwdataTweqod = async(token, opt = {}) => {
             }
         }
         else {
-            eqs = await downloadEqs(token)
+            eqs = await downloadEqs(token, { keepAllData })
             // console.log('eqs', eqs, size(eqs))
             // eqs = [eqs[0], eqs[1]]
             // fs.writeFileSync('./temp.json', JSON.stringify(eqs, null, 2), 'utf8')
