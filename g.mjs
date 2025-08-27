@@ -26,6 +26,7 @@ let fdResult = './_result'
 w.fsCleanFolder(fdResult)
 
 let opt = {
+    keepAllData: false,
     fdDwStorage,
     fdDwAttime,
     fdDwCurrent,
