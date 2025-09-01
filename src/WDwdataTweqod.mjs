@@ -5,8 +5,10 @@ import reverse from 'lodash-es/reverse.js'
 import values from 'lodash-es/values.js'
 import isbol from 'wsemi/src/isbol.mjs'
 import isestr from 'wsemi/src/isestr.mjs'
+import isp0int from 'wsemi/src/isp0int.mjs'
 import isfun from 'wsemi/src/isfun.mjs'
 import ispm from 'wsemi/src/ispm.mjs'
+import cdbl from 'wsemi/src/cdbl.mjs'
 import haskey from 'wsemi/src/haskey.mjs'
 import pmSeries from 'wsemi/src/pmSeries.mjs'
 import fsIsFolder from 'wsemi/src/fsIsFolder.mjs'
@@ -39,6 +41,7 @@ import downloadEqs from './downloadEqs.mjs'
  * @param {Function} [opt.funAdd=null] 輸入當有新資料時，需要連動處理之函數，預設null
  * @param {Function} [opt.funModify=null] 輸入當有資料需更新時，需要連動處理之函數，預設null
  * @param {Function} [opt.funRemove=null] 輸入當有資料需刪除時，需要連動處理之函數，預設null
+ * @param {Number} [opt.timeToleranceRemove=3600000] 輸入刪除任務之防抖時長，單位ms，預設3600000，約1hr
  * @returns {Object} 回傳事件物件，可呼叫函數on監聽change事件
  * @example
  *
@@ -88,9 +91,9 @@ import downloadEqs from './downloadEqs.mjs'
  * })
  * // change { event: 'start', msg: 'running...' }
  * // change { event: 'proc-callfun-download', msg: 'start...' }
- * // change { event: 'proc-callfun-download', msg: 'done' }
+ * // change { event: 'proc-callfun-download', num: 2, msg: 'done' }
  * // change { event: 'proc-callfun-getCurrent', msg: 'start...' }
- * // change { event: 'proc-callfun-getCurrent', msg: 'done' }
+ * // change { event: 'proc-callfun-getCurrent', num: 0, msg: 'done' }
  * // change { event: 'compare', msg: 'start...' }
  * // change { event: 'compare', msg: 'done' }
  * // change { event: 'proc-add-callfun-add', id: '114101', msg: 'start...' }
@@ -179,6 +182,13 @@ let WDwdataTweqod = async(token, opt = {}) => {
 
     //funRemove
     let funRemove = get(opt, 'funRemove')
+
+    //timeToleranceRemove
+    let timeToleranceRemove = get(opt, 'timeToleranceRemove')
+    if (!isp0int(timeToleranceRemove)) {
+        timeToleranceRemove = 60 * 60 * 1000
+    }
+    timeToleranceRemove = cdbl(timeToleranceRemove)
 
     //treeFilesAndGetHashs
     let treeFilesAndGetHashs = (fd) => {
@@ -381,6 +391,7 @@ let WDwdataTweqod = async(token, opt = {}) => {
         funRemove,
         funAdd,
         funModify,
+        timeToleranceRemove,
     }
     let ev = await WDwdataBuilder(optBdr)
 
