@@ -30,11 +30,11 @@ describe('once', function() {
         w.fsCleanFolder(fdDwCurrent)
 
         //fdResultTemp
-        let fdResultTemp = './_once_resultTemp'
+        let fdResultTemp = `./_once_resultTemp`
         w.fsCleanFolder(fdResultTemp)
 
         //fdResult
-        let fdResult = './_once_result'
+        let fdResult = `./_once_result`
         w.fsCleanFolder(fdResult)
 
         //funDownloadEqs

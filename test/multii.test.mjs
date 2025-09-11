@@ -110,11 +110,11 @@ describe('multi', function() {
         w.fsCleanFolder(fdDwCurrent)
 
         //fdResultTemp
-        let fdResultTemp = './_multi_resultTemp'
+        let fdResultTemp = `./_multi_resultTemp`
         w.fsCleanFolder(fdResultTemp)
 
         //fdResult
-        let fdResult = './_multi_result'
+        let fdResult = `./_multi_result`
         w.fsCleanFolder(fdResult)
 
         let i = 0

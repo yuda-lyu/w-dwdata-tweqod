@@ -32,8 +32,8 @@ import downloadEqs from './downloadEqs.mjs'
  * @param {String} [opt.fdDwStorage='./_dwStorage'] 輸入完整下載數據資料夾字串，預設'./_dwStorage'
  * @param {String} [opt.fdDwAttime='./_dwAttime'] 輸入當前下載供比對hash用之數據資料夾字串，預設'./_dwAttime'
  * @param {String} [opt.fdDwCurrent='./_dwCurrent'] 輸入已下載供比對hash用之數據資料夾字串，預設'./_dwCurrent'
- * @param {String} [opt.fdResultTemp='./_resultTemp'] 輸入若有變更數據時，儲存前次已下載數據所連動生成數據資料夾字串，預設'./_resultTemp'
- * @param {String} [opt.fdResult='./_result'] 輸入已下載數據所連動生成數據資料夾字串，預設'./_result'
+ * @param {String} [opt.fdResultTemp=`./_resultTemp`] 輸入若有變更數據時，儲存前次已下載數據所連動生成數據資料夾字串，預設`./_resultTemp`
+ * @param {String} [opt.fdResult=`./_result`] 輸入已下載數據所連動生成數據資料夾字串，預設`./_result`
  * @param {String} [opt.fdTaskCpActualSrc='./_taskCpActualSrc'] 輸入任務狀態之來源端完整資料夾字串，預設'./_taskCpActualSrc'
  * @param {String} [opt.fdTaskCpSrc='./_taskCpSrc'] 輸入任務狀態之來源端資料夾字串，預設'./_taskCpSrc'
  * @param {String} [opt.fdLog='./_logs'] 輸入儲存log資料夾字串，預設'./_logs'
@@ -69,11 +69,11 @@ import downloadEqs from './downloadEqs.mjs'
  * w.fsCleanFolder(fdDwCurrent)
  *
  * //fdResultTemp
- * let fdResultTemp = './_resultTemp'
+ * let fdResultTemp = `./_resultTemp`
  * w.fsCleanFolder(fdResultTemp)
  *
  * //fdResult
- * let fdResult = './_result'
+ * let fdResult = `./_result`
  * w.fsCleanFolder(fdResult)
  *
  * let opt = {
@@ -151,7 +151,7 @@ let WDwdataTweqod = async(token, opt = {}) => {
     //fdResultTemp
     let fdResultTemp = get(opt, 'fdResultTemp')
     if (!isestr(fdResultTemp)) {
-        fdResultTemp = './_resultTemp'
+        fdResultTemp = `./_resultTemp`
     }
     if (!fsIsFolder(fdResultTemp)) {
         fsCreateFolder(fdResultTemp)
@@ -160,7 +160,7 @@ let WDwdataTweqod = async(token, opt = {}) => {
     //fdResult
     let fdResult = get(opt, 'fdResult')
     if (!isestr(fdResult)) {
-        fdResult = './_result'
+        fdResult = `./_result`
     }
     if (!fsIsFolder(fdResult)) {
         fsCreateFolder(fdResult)
