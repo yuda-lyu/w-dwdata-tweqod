@@ -5,7 +5,7 @@ import assert from 'assert'
 import WDwdataTweqod from '../src/WDwdataTweqod.mjs'
 
 
-describe('WDwdataTweqod', function() {
+describe('once', function() {
 
     let test = async() => {
 
@@ -18,19 +18,23 @@ describe('WDwdataTweqod', function() {
         let token = _.get(st, 'token')
 
         //fdDwStorage
-        let fdDwStorage = `./_dwStorage`
+        let fdDwStorage = `./_once_dwStorage`
         w.fsCleanFolder(fdDwStorage)
 
         //fdDwAttime
-        let fdDwAttime = `./_dwAttime`
+        let fdDwAttime = `./_once_dwAttime`
         w.fsCleanFolder(fdDwAttime)
 
         //fdDwCurrent
-        let fdDwCurrent = `./_dwCurrent`
+        let fdDwCurrent = `./_once_dwCurrent`
         w.fsCleanFolder(fdDwCurrent)
 
+        //fdResultTemp
+        let fdResultTemp = './_once_resultTemp'
+        w.fsCleanFolder(fdResultTemp)
+
         //fdResult
-        let fdResult = './_result'
+        let fdResult = './_once_result'
         w.fsCleanFolder(fdResult)
 
         //funDownloadEqs
@@ -74,6 +78,7 @@ describe('WDwdataTweqod', function() {
             fdDwStorage,
             fdDwAttime,
             fdDwCurrent,
+            fdResultTemp,
             fdResult,
             funDownloadEqs,
             // funDownload,
@@ -93,12 +98,19 @@ describe('WDwdataTweqod', function() {
             delete msg.timeRunSpent
             // console.log('change', msg)
             ms.push(msg)
-            if (msg.event === 'end') {
-                // console.log('ms', ms)
-                pm.resolve(ms)
-            }
+        })
+        ev.on('end', () => {
+            w.fsDeleteFolder(fdDwStorage)
+            w.fsDeleteFolder(fdDwAttime)
+            w.fsDeleteFolder(fdDwCurrent)
+            w.fsDeleteFolder(fdResultTemp)
+            w.fsDeleteFolder(fdResult)
+            // console.log('ms', ms)
+            pm.resolve(ms)
         })
         // change { event: 'start', msg: 'running...' }
+        // change { event: 'proc-callfun-afterStart', msg: 'start...' }
+        // change { event: 'proc-callfun-afterStart', msg: 'done' }
         // change { event: 'proc-callfun-download', msg: 'start...' }
         // change { event: 'proc-callfun-download', num: 2, msg: 'done' }
         // change { event: 'proc-callfun-getCurrent', msg: 'start...' }
@@ -115,6 +127,8 @@ describe('WDwdataTweqod', function() {
     }
     let ms = [
         { event: 'start', msg: 'running...' },
+        { event: 'proc-callfun-afterStart', msg: 'start...' },
+        { event: 'proc-callfun-afterStart', msg: 'done' },
         { event: 'proc-callfun-download', msg: 'start...' },
         { event: 'proc-callfun-download', num: 2, msg: 'done' },
         { event: 'proc-callfun-getCurrent', msg: 'start...' },
@@ -125,10 +139,12 @@ describe('WDwdataTweqod', function() {
         { event: 'proc-add-callfun-add', id: '114115', msg: 'done' },
         { event: 'proc-add-callfun-add', id: '114116', msg: 'start...' },
         { event: 'proc-add-callfun-add', id: '114116', msg: 'done' },
+        { event: 'proc-callfun-beforeEnd', msg: 'start...' },
+        { event: 'proc-callfun-beforeEnd', msg: 'done' },
         { event: 'end', msg: 'done' }
     ]
 
-    it('test in localhost', async () => {
+    it('test once', async () => {
         let r = await test()
         let rr = ms
         assert.strict.deepEqual(r, rr)

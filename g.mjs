@@ -21,6 +21,10 @@ w.fsCleanFolder(fdDwAttime)
 let fdDwCurrent = `./_dwCurrent`
 w.fsCleanFolder(fdDwCurrent)
 
+//fdResultTemp
+let fdResultTemp = './_resultTemp'
+w.fsCleanFolder(fdResultTemp)
+
 //fdResult
 let fdResult = './_result'
 w.fsCleanFolder(fdResult)
@@ -30,6 +34,7 @@ let opt = {
     fdDwStorage,
     fdDwAttime,
     fdDwCurrent,
+    fdResultTemp,
     fdResult,
     // funDownload,
     // funGetCurrent,
@@ -46,6 +51,8 @@ ev.on('change', (msg) => {
     console.log('change', msg)
 })
 // change { event: 'start', msg: 'running...' }
+// change { event: 'proc-callfun-afterStart', msg: 'start...' }
+// change { event: 'proc-callfun-afterStart', msg: 'done' }
 // change { event: 'proc-callfun-download', msg: 'start...' }
 // change { event: 'proc-callfun-download', num: 2, msg: 'done' }
 // change { event: 'proc-callfun-getCurrent', msg: 'start...' }

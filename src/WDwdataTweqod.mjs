@@ -32,6 +32,7 @@ import downloadEqs from './downloadEqs.mjs'
  * @param {String} [opt.fdDwStorage='./_dwStorage'] 輸入完整下載數據資料夾字串，預設'./_dwStorage'
  * @param {String} [opt.fdDwAttime='./_dwAttime'] 輸入當前下載供比對hash用之數據資料夾字串，預設'./_dwAttime'
  * @param {String} [opt.fdDwCurrent='./_dwCurrent'] 輸入已下載供比對hash用之數據資料夾字串，預設'./_dwCurrent'
+ * @param {String} [opt.fdResultTemp='./_resultTemp'] 輸入若有變更數據時，儲存前次已下載數據所連動生成數據資料夾字串，預設'./_resultTemp'
  * @param {String} [opt.fdResult='./_result'] 輸入已下載數據所連動生成數據資料夾字串，預設'./_result'
  * @param {String} [opt.fdTaskCpActualSrc='./_taskCpActualSrc'] 輸入任務狀態之來源端完整資料夾字串，預設'./_taskCpActualSrc'
  * @param {String} [opt.fdTaskCpSrc='./_taskCpSrc'] 輸入任務狀態之來源端資料夾字串，預設'./_taskCpSrc'
@@ -67,14 +68,20 @@ import downloadEqs from './downloadEqs.mjs'
  * let fdDwCurrent = `./_dwCurrent`
  * w.fsCleanFolder(fdDwCurrent)
  *
+ * //fdResultTemp
+ * let fdResultTemp = './_resultTemp'
+ * w.fsCleanFolder(fdResultTemp)
+ *
  * //fdResult
  * let fdResult = './_result'
  * w.fsCleanFolder(fdResult)
  *
  * let opt = {
+ *     keepAllData: false,
  *     fdDwStorage,
  *     fdDwAttime,
  *     fdDwCurrent,
+ *     fdResultTemp,
  *     fdResult,
  *     // funDownload,
  *     // funGetCurrent,
@@ -91,6 +98,8 @@ import downloadEqs from './downloadEqs.mjs'
  *     console.log('change', msg)
  * })
  * // change { event: 'start', msg: 'running...' }
+ * // change { event: 'proc-callfun-afterStart', msg: 'start...' }
+ * // change { event: 'proc-callfun-afterStart', msg: 'done' }
  * // change { event: 'proc-callfun-download', msg: 'start...' }
  * // change { event: 'proc-callfun-download', num: 2, msg: 'done' }
  * // change { event: 'proc-callfun-getCurrent', msg: 'start...' }
@@ -137,6 +146,15 @@ let WDwdataTweqod = async(token, opt = {}) => {
     }
     if (!fsIsFolder(fdDwCurrent)) {
         fsCreateFolder(fdDwCurrent)
+    }
+
+    //fdResultTemp
+    let fdResultTemp = get(opt, 'fdResultTemp')
+    if (!isestr(fdResultTemp)) {
+        fdResultTemp = './_resultTemp'
+    }
+    if (!fsIsFolder(fdResultTemp)) {
+        fsCreateFolder(fdResultTemp)
     }
 
     //fdResult
@@ -365,19 +383,45 @@ let WDwdataTweqod = async(token, opt = {}) => {
     //funModifyDef
     let funModifyDef = async(v) => {
 
-        let fd = `${fdResult}/${v.id}`
-        if (!fsIsFolder(fd)) {
-            fsCreateFolder(fd)
-        }
-        fsCleanFolder(fd)
+        //複製舊資料夾(含檔案)至fdResultTemp做暫時備份, fdResultTemp會於funAfterStart清空, 於funBeforeEnd刪除
+        if (true) {
 
-        let fpSrc = `${fdDwStorage}/${v.id}.json`
-        let fpTar = `${fd}/${v.id}.json`
-        fsCopyFile(fpSrc, fpTar)
+            let fdSrc = `${fdResult}/${v.id}`
+            let fdTar = `${fdResultTemp}/${v.id}`
+            fsCopyFolder(fdSrc, fdTar)
+
+        }
+
+        //複製新檔案至fdResult
+        if (true) {
+
+            let fd = `${fdResult}/${v.id}`
+            if (!fsIsFolder(fd)) {
+                fsCreateFolder(fd)
+            }
+            fsCleanFolder(fd)
+
+            let fpSrc = `${fdDwStorage}/${v.id}.json`
+            let fpTar = `${fd}/${v.id}.json`
+            fsCopyFile(fpSrc, fpTar)
+
+        }
 
     }
     if (!isfun(funModify)) {
         funModify = funModifyDef
+    }
+
+    let funAfterStart = async() => {
+
+        fsCleanFolder(fdResultTemp)
+
+    }
+
+    let funBeforeEnd = async() => {
+
+        fsCleanFolder(fdResultTemp)
+
     }
 
     //WDwdataBuilder
@@ -392,6 +436,8 @@ let WDwdataTweqod = async(token, opt = {}) => {
         funRemove,
         funAdd,
         funModify,
+        funAfterStart,
+        funBeforeEnd,
         timeToleranceRemove,
     }
     let ev = await WDwdataBuilder(optBdr)
