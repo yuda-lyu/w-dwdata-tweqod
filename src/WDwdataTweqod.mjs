@@ -424,7 +424,6 @@ let WDwdataTweqod = async(token, opt = {}) => {
 
     }
 
-    //WDwdataBuilder
     let optBdr = {
         fdDwAttime,
         fdDwCurrent,
