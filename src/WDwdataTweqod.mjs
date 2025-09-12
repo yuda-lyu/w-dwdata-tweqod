@@ -33,6 +33,7 @@ import downloadEqs from './downloadEqs.mjs'
  * @param {String} token 輸入氣象署OpenData之API用token字串
  * @param {Object} [opt={}] 輸入設定物件，預設{}
  * @param {Boolean} [opt.keepAllData=true] 輸入是否儲存全部資料，氣象署地震資料內Intensity可能常變更而觸發事件，可設定keepAllData=false只基於重要數據進行偵測。預設true
+ * @param {String} [opt.fdTagRemove='./_tagRemove'] 輸入暫存標記為刪除數據資料夾字串，預設'./_tagRemove'
  * @param {String} [opt.fdDwStorage='./_dwStorage'] 輸入完整下載數據資料夾字串，預設'./_dwStorage'
  * @param {String} [opt.fdDwAttime='./_dwAttime'] 輸入當前下載供比對hash用之數據資料夾字串，預設'./_dwAttime'
  * @param {String} [opt.fdDwCurrent='./_dwCurrent'] 輸入已下載供比對hash用之數據資料夾字串，預設'./_dwCurrent'
@@ -60,6 +61,10 @@ import downloadEqs from './downloadEqs.mjs'
  * let st = JSON.parse(j)
  * let token = _.get(st, 'token')
  *
+ * //fdTagRemove
+ * let fdTagRemove = `./_tagRemove`
+ * w.fsCleanFolder(fdTagRemove)
+ *
  * //fdDwStorage
  * let fdDwStorage = `./_dwStorage`
  * w.fsCleanFolder(fdDwStorage)
@@ -80,13 +85,25 @@ import downloadEqs from './downloadEqs.mjs'
  * let fdResult = `./_result`
  * w.fsCleanFolder(fdResult)
  *
+ * //fdTaskCpActualSrc
+ * let fdTaskCpActualSrc = `./_taskCpActualSrc`
+ * w.fsCleanFolder(fdTaskCpActualSrc)
+ *
+ * //fdTaskCpSrc
+ * let fdTaskCpSrc = `./_taskCpSrc`
+ * w.fsCleanFolder(fdTaskCpSrc)
+ *
  * let opt = {
  *     keepAllData: false,
+ *     fdTagRemove,
  *     fdDwStorage,
  *     fdDwAttime,
  *     fdDwCurrent,
  *     fdResultTemp,
  *     fdResult,
+ *     fdTaskCpActualSrc,
+ *     fdTaskCpSrc,
+ *     // fdLog,
  *     // funDownload,
  *     // funGetCurrent,
  *     // funRemove,
@@ -123,6 +140,12 @@ let WDwdataTweqod = async(token, opt = {}) => {
     let keepAllData = get(opt, 'keepAllData')
     if (!isbol(keepAllData)) {
         keepAllData = true
+    }
+
+    //fdTagRemove, 暫存標記為刪除數據資料夾
+    let fdTagRemove = get(opt, 'fdTagRemove')
+    if (!isestr(fdTagRemove)) {
+        fdTagRemove = `./_tagRemove`
     }
 
     //fdDwStorage
@@ -168,6 +191,15 @@ let WDwdataTweqod = async(token, opt = {}) => {
     }
     if (!fsIsFolder(fdResult)) {
         fsCreateFolder(fdResult)
+    }
+
+    //fdTaskCpActualSrc, 儲存完整任務狀態資料夾
+    let fdTaskCpActualSrc = get(opt, 'fdTaskCpActualSrc')
+    if (!isestr(fdTaskCpActualSrc)) {
+        fdTaskCpActualSrc = `./_taskCpActualSrc`
+    }
+    if (!fsIsFolder(fdTaskCpActualSrc)) {
+        fsCreateFolder(fdTaskCpActualSrc)
     }
 
     //fdTaskCpSrc
@@ -429,9 +461,11 @@ let WDwdataTweqod = async(token, opt = {}) => {
     }
 
     let optBdr = {
+        fdTagRemove,
         fdDwAttime,
         fdDwCurrent,
         fdResult,
+        fdTaskCpActualSrc,
         fdTaskCpSrc,
         fdLog,
         funDownload,

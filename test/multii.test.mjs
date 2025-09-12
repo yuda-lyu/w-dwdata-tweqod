@@ -97,6 +97,10 @@ describe('multi', function() {
             3: eqs3,
         }
 
+        //fdTagRemove
+        let fdTagRemove = `./_multi_tagRemove`
+        w.fsCleanFolder(fdTagRemove)
+
         //fdDwStorage
         let fdDwStorage = `./_multi_dwStorage`
         w.fsCleanFolder(fdDwStorage)
@@ -117,6 +121,14 @@ describe('multi', function() {
         let fdResult = `./_multi_result`
         w.fsCleanFolder(fdResult)
 
+        //fdTaskCpActualSrc
+        let fdTaskCpActualSrc = `./_multi_taskCpActualSrc`
+        w.fsCleanFolder(fdTaskCpActualSrc)
+
+        //fdTaskCpSrc
+        let fdTaskCpSrc = `./_multi_taskCpSrc`
+        w.fsCleanFolder(fdTaskCpSrc)
+
         let i = 0
         let run = async() => {
             i++
@@ -134,11 +146,15 @@ describe('multi', function() {
             }
 
             let opt = {
+                fdTagRemove,
                 fdDwStorage,
                 fdDwAttime,
                 fdDwCurrent,
                 fdResultTemp,
                 fdResult,
+                fdTaskCpActualSrc,
+                fdTaskCpSrc,
+                // fdLog,
                 funDownloadEqs,
                 // funDownload,
                 // funGetCurrent,
@@ -178,11 +194,14 @@ describe('multi', function() {
             await run()
         })
 
+        w.fsDeleteFolder(fdTagRemove)
         w.fsDeleteFolder(fdDwStorage)
         w.fsDeleteFolder(fdDwAttime)
         w.fsDeleteFolder(fdDwCurrent)
         w.fsDeleteFolder(fdResultTemp)
         w.fsDeleteFolder(fdResult)
+        w.fsDeleteFolder(fdTaskCpActualSrc)
+        w.fsDeleteFolder(fdTaskCpSrc)
 
         // console.log('ms', ms)
         return ms

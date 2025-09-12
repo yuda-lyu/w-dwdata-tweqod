@@ -17,6 +17,10 @@ describe('once', function() {
         let st = JSON.parse(j)
         let token = _.get(st, 'token')
 
+        //fdTagRemove
+        let fdTagRemove = `./_once_tagRemove`
+        w.fsCleanFolder(fdTagRemove)
+
         //fdDwStorage
         let fdDwStorage = `./_once_dwStorage`
         w.fsCleanFolder(fdDwStorage)
@@ -36,6 +40,14 @@ describe('once', function() {
         //fdResult
         let fdResult = `./_once_result`
         w.fsCleanFolder(fdResult)
+
+        //fdTaskCpActualSrc
+        let fdTaskCpActualSrc = `./_once_taskCpActualSrc`
+        w.fsCleanFolder(fdTaskCpActualSrc)
+
+        //fdTaskCpSrc
+        let fdTaskCpSrc = `./_once_taskCpSrc`
+        w.fsCleanFolder(fdTaskCpSrc)
 
         //funDownloadEqs
         let funDownloadEqs = async() => {
@@ -75,11 +87,15 @@ describe('once', function() {
         }
 
         let opt = {
+            fdTagRemove,
             fdDwStorage,
             fdDwAttime,
             fdDwCurrent,
             fdResultTemp,
             fdResult,
+            fdTaskCpActualSrc,
+            fdTaskCpSrc,
+            // fdLog,
             funDownloadEqs,
             // funDownload,
             // funGetCurrent,
@@ -100,28 +116,19 @@ describe('once', function() {
             ms.push(msg)
         })
         ev.on('end', () => {
+
+            w.fsDeleteFolder(fdTagRemove)
             w.fsDeleteFolder(fdDwStorage)
             w.fsDeleteFolder(fdDwAttime)
             w.fsDeleteFolder(fdDwCurrent)
             w.fsDeleteFolder(fdResultTemp)
             w.fsDeleteFolder(fdResult)
+            w.fsDeleteFolder(fdTaskCpActualSrc)
+            w.fsDeleteFolder(fdTaskCpSrc)
+
             // console.log('ms', ms)
             pm.resolve(ms)
         })
-        // change { event: 'start', msg: 'running...' }
-        // change { event: 'proc-callfun-afterStart', msg: 'start...' }
-        // change { event: 'proc-callfun-afterStart', msg: 'done' }
-        // change { event: 'proc-callfun-download', msg: 'start...' }
-        // change { event: 'proc-callfun-download', num: 2, msg: 'done' }
-        // change { event: 'proc-callfun-getCurrent', msg: 'start...' }
-        // change { event: 'proc-callfun-getCurrent', num: 0, msg: 'done' }
-        // change { event: 'compare', msg: 'start...' }
-        // change { event: 'compare', numRemove: 0, numAdd: 2, numModify: 0, numSame: 0, msg: 'done' }
-        // change { event: 'proc-add-callfun-add', id: '114101', msg: 'start...' }
-        // change { event: 'proc-add-callfun-add', id: '114101', msg: 'done' }
-        // change { event: 'proc-add-callfun-add', id: '114102', msg: 'start...' }
-        // change { event: 'proc-add-callfun-add', id: '114102', msg: 'done' }
-        // ...
 
         return pm
     }

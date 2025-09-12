@@ -29,6 +29,10 @@ let j = fs.readFileSync('../_data/settings.json', 'utf8')
 let st = JSON.parse(j)
 let token = _.get(st, 'token')
 
+//fdTagRemove
+let fdTagRemove = `./_tagRemove`
+w.fsCleanFolder(fdTagRemove)
+
 //fdDwStorage
 let fdDwStorage = `./_dwStorage`
 w.fsCleanFolder(fdDwStorage)
@@ -49,13 +53,25 @@ w.fsCleanFolder(fdResultTemp)
 let fdResult = `./_result`
 w.fsCleanFolder(fdResult)
 
+//fdTaskCpActualSrc
+let fdTaskCpActualSrc = `./_taskCpActualSrc`
+w.fsCleanFolder(fdTaskCpActualSrc)
+
+//fdTaskCpSrc
+let fdTaskCpSrc = `./_taskCpSrc`
+w.fsCleanFolder(fdTaskCpSrc)
+
 let opt = {
     keepAllData: false,
+    fdTagRemove,
     fdDwStorage,
     fdDwAttime,
     fdDwCurrent,
     fdResultTemp,
     fdResult,
+    fdTaskCpActualSrc,
+    fdTaskCpSrc,
+    // fdLog,
     // funDownload,
     // funGetCurrent,
     // funRemove,

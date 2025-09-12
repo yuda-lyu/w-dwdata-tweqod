@@ -92,6 +92,10 @@ let kpEqs = {
     3: eqs3,
 }
 
+//fdTagRemove
+let fdTagRemove = `./_tagRemove`
+w.fsCleanFolder(fdTagRemove)
+
 //fdDwStorage
 let fdDwStorage = `./_dwStorage`
 w.fsCleanFolder(fdDwStorage)
@@ -112,6 +116,14 @@ w.fsCleanFolder(fdResultTemp)
 let fdResult = `./_result`
 w.fsCleanFolder(fdResult)
 
+//fdTaskCpActualSrc
+let fdTaskCpActualSrc = `./_taskCpActualSrc`
+w.fsCleanFolder(fdTaskCpActualSrc)
+
+//fdTaskCpSrc
+let fdTaskCpSrc = `./_taskCpSrc`
+w.fsCleanFolder(fdTaskCpSrc)
+
 let i = 0
 let run = async() => {
     i++
@@ -129,11 +141,15 @@ let run = async() => {
     }
 
     let opt = {
+        fdTagRemove,
         fdDwStorage,
         fdDwAttime,
         fdDwCurrent,
         fdResultTemp,
         fdResult,
+        fdTaskCpActualSrc,
+        fdTaskCpSrc,
+        // fdLog,
         funDownloadEqs,
         // funDownload,
         // funGetCurrent,
