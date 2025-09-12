@@ -114,9 +114,9 @@ w.fsCleanFolder(fdResult)
 
 let i = 0
 let run = async() => {
-    let pm = w.genPm()
-
     i++
+
+    let pm = w.genPm()
 
     let j = fs.readFileSync('../_data/settings.json', 'utf8')
     let st = JSON.parse(j)
@@ -161,7 +161,7 @@ let run = async() => {
         }
         console.log('change', msg)
     })
-    ev.on('end', (msg) => {
+    ev.on('end', () => {
         pm.resolve()
     })
 

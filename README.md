@@ -1,5 +1,5 @@
 # w-dwdata-tweqod
-A download tool for earthquake data from Taiwan CWA.
+A downloader for earthquake data from Taiwan CWA OpenData.
 
 ![language](https://img.shields.io/badge/language-JavaScript-orange.svg) 
 [![npm version](http://img.shields.io/npm/v/w-dwdata-tweqod.svg?style=flat)](https://npmjs.org/package/w-dwdata-tweqod) 

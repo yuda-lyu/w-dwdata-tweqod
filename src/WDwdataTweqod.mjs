@@ -24,7 +24,11 @@ import downloadEqs from './downloadEqs.mjs'
 
 
 /**
- * 於OpenData下載台灣氣象署地震資料
+ * 基於檔案之下載台灣氣象署OpenData地震數據與任務建構器
+ *
+ * 執行階段最新hash數據放置於fdDwAttime，前次hash數據放置於fdDwCurrent，於結束前會將fdDwAttime複製蓋過fdDwCurrent
+ *
+ * 執行階段最新數據放置於fdResult，前次數據會另存備份放置於fdResultTemp，於結束前會將fdResultTemp清空
  *
  * @param {String} token 輸入氣象署OpenData之API用token字串
  * @param {Object} [opt={}] 輸入設定物件，預設{}
