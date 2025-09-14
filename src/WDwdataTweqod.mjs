@@ -18,7 +18,7 @@ import fsCreateFolder from 'wsemi/src/fsCreateFolder.mjs'
 import fsCopyFolder from 'wsemi/src/fsCopyFolder.mjs'
 import fsDeleteFolder from 'wsemi/src/fsDeleteFolder.mjs'
 import fsTreeFolder from 'wsemi/src/fsTreeFolder.mjs'
-import fsGetFileXxHash from 'wsemi/src/fsGetFileXxHash.mjs'
+import fsGetFileBasicHash from 'wsemi/src/fsGetFileBasicHash.mjs'
 import WDwdataBuilder from 'w-dwdata-builder/src/WDwdataBuilder.mjs'
 import downloadEqs from './downloadEqs.mjs'
 
@@ -310,7 +310,7 @@ let WDwdataTweqod = async(token, opt = {}) => {
             fs.writeFileSync(fp, JSON.stringify(v), 'utf8')
 
             //計算檔案hash值, 為新hash
-            let hashNew = await fsGetFileXxHash(fp)
+            let hashNew = await fsGetFileBasicHash(fp, { type: 'md5' })
 
             //check
             if (haskey(kpHash, v.id)) {
