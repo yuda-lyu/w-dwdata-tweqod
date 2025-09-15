@@ -26,7 +26,7 @@ import downloadEqs from './downloadEqs.mjs'
 /**
  * 基於檔案之下載台灣氣象署OpenData地震數據與任務建構器
  *
- * 執行階段最新hash數據放置於fdDwAttime，前次hash數據放置於fdDwCurrent，於結束前會將fdDwAttime複製蓋過fdDwCurrent
+ * 執行階段最新hash數據放置於fdDwAttime，前次hash數據會於結束前自動備份至fdDwCurrent
  *
  * 執行階段最新數據放置於fdResult，前次數據會另存備份放置於fdResultTemp，於結束前會將fdResultTemp清空
  *
@@ -43,8 +43,8 @@ import downloadEqs from './downloadEqs.mjs'
  * @param {String} [opt.fdTaskCpSrc='./_taskCpSrc'] 輸入任務狀態之來源端資料夾字串，預設'./_taskCpSrc'
  * @param {String} [opt.fdLog='./_logs'] 輸入儲存log資料夾字串，預設'./_logs'
  * @param {Function} [opt.funDownloadEqs=null] 輸入自定義下載地震數據函數，回傳資料陣列，預設null
- * @param {Function} [opt.funDownload=null] 輸入自定義當前下載之hash數據處理函數，回傳資料陣列，預設null
- * @param {Function} [opt.funGetCurrent=null] 輸入自定義已下載之hash數據處理函數，回傳資料陣列，預設null
+ * @param {Function} [opt.funDownload=null] 輸入當前下載數據hash之函數，回傳資料陣列，預設null
+ * @param {Function} [opt.funGetCurrent=null] 輸入已下載數據hash之函數，回傳資料陣列，預設null
  * @param {Function} [opt.funAdd=null] 輸入當有新資料時，需要連動處理之函數，預設null
  * @param {Function} [opt.funModify=null] 輸入當有資料需更新時，需要連動處理之函數，預設null
  * @param {Function} [opt.funRemove=null] 輸入當有資料需刪除時，需要連動處理之函數，預設null
