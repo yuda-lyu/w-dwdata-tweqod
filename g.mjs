@@ -73,8 +73,8 @@ ev.on('change', (msg) => {
 // change { event: 'proc-callfun-download', num: 2, msg: 'done' }
 // change { event: 'proc-callfun-getCurrent', msg: 'start...' }
 // change { event: 'proc-callfun-getCurrent', num: 0, msg: 'done' }
-// change { event: 'compare', msg: 'start...' }
-// change { event: 'compare', numRemove: 0, numAdd: 2, numModify: 0, numSame: 0, msg: 'done' }
+// change { event: 'proc-compare', msg: 'start...' }
+// change { event: 'proc-compare', numRemove: 0, numAdd: 2, numModify: 0, numSame: 0, msg: 'done' }
 // change { event: 'proc-add-callfun-add', id: '114101', msg: 'start...' }
 // change { event: 'proc-add-callfun-add', id: '114101', msg: 'done' }
 // change { event: 'proc-add-callfun-add', id: '114102', msg: 'start...' }
