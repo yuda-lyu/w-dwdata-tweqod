@@ -12,6 +12,7 @@ A downloader for earthquake data from Taiwan CWA OpenData.
 To view documentation or get support, visit [docs](https://yuda-lyu.github.io/w-dwdata-tweqod/global.html).
 
 ## Installation
+
 ### Using npm(ES6 module):
 ```alias
 npm i w-dwdata-tweqod
