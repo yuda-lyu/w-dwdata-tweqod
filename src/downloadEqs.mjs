@@ -7,7 +7,6 @@ import isestr from 'wsemi/src/isestr.mjs'
 import cstr from 'wsemi/src/cstr.mjs'
 import strdelleft from 'wsemi/src/strdelleft.mjs'
 import ot from 'dayjs'
-import axios from 'axios'
 
 
 let downloadEqs = async(token, opt = {}) => {
@@ -31,8 +30,22 @@ let downloadEqs = async(token, opt = {}) => {
         keepAllData = true
     }
 
+    //getJson, 使用nodejs內建fetch取得json數據
+    let getJson = async(url) => {
+
+        //fetch
+        let res = await fetch(url)
+
+        //check, fetch於非2xx時不拋錯, 須自行偵測
+        if (!res.ok) {
+            throw new Error(`fetch error, status[${res.status}]`)
+        }
+
+        return await res.json()
+    }
+
     //get, 顯著有感地震
-    let rEqsL = await axios.get(`https://opendata.cwa.gov.tw/api/v1/rest/datastore/E-A0015-001?Authorization=${token}`)
+    let rEqsL = await getJson(`https://opendata.cwa.gov.tw/api/v1/rest/datastore/E-A0015-001?Authorization=${token}`)
         .catch((err) => {
             errTemp = err
         })
@@ -44,7 +57,7 @@ let downloadEqs = async(token, opt = {}) => {
     }
 
     // //get, 小區域有感地震
-    // let rEqsS = await axios.get(`https://opendata.cwa.gov.tw/api/v1/rest/datastore/E-A0016-001?Authorization=${token}`)
+    // let rEqsS = await getJson(`https://opendata.cwa.gov.tw/api/v1/rest/datastore/E-A0016-001?Authorization=${token}`)
     //     .catch((err) => {
     //         errTemp = err
     //     })
@@ -56,8 +69,8 @@ let downloadEqs = async(token, opt = {}) => {
     // }
 
     //eqsL
-    let eqsL1 = get(rEqsL, 'data.records.earthquake', [])
-    let eqsL2 = get(rEqsL, 'data.records.Earthquake', [])
+    let eqsL1 = get(rEqsL, 'records.earthquake', [])
+    let eqsL2 = get(rEqsL, 'records.Earthquake', [])
     let eqsL = [...eqsL1, ...eqsL2]
     if (!isearr(eqsL)) {
         console.log('rEqsL', rEqsL)
@@ -66,8 +79,8 @@ let downloadEqs = async(token, opt = {}) => {
     // console.log('eqsL', eqsL)
 
     // //eqsS
-    // let eqsS1 = get(rEqsS, 'data.records.earthquake', [])
-    // let eqsS2 = get(rEqsS, 'data.records.Earthquake', [])
+    // let eqsS1 = get(rEqsS, 'records.earthquake', [])
+    // let eqsS2 = get(rEqsS, 'records.Earthquake', [])
     // let eqsS = [...eqsS1, ...eqsS2]
     // if (!isearr(eqsS)) {
     //     console.log('rEqsS', rEqsS)

@@ -17,20 +17,16 @@ rollupFiles({
     globals: {
         'path': 'path',
         'fs': 'fs',
-        'url': 'url',
-        'pino': 'pino',
+        'crypto': 'crypto',
         'events': 'events',
         'chokidar': 'chokidar',
-        'xxhash-wasm': 'xxhash-wasm',
     },
     external: [
         'path',
         'fs',
-        'url',
-        'pino',
+        'crypto',
         'events',
         'chokidar',
-        'xxhash-wasm',
     ],
 })
 

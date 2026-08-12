@@ -51,7 +51,9 @@ let opt = {
     fdResult,
     fdTaskCpActualSrc,
     fdTaskCpSrc,
-    // fdLog,
+    // srLog,
+    // useShowLog,
+    // funDownloadEqs,
     // funDownload,
     // funGetCurrent,
     // funRemove,
@@ -64,6 +66,9 @@ let ev = await WDwdataTweqod(token, opt)
     })
 ev.on('change', (msg) => {
     delete msg.type
+    delete msg.timeRunStart
+    delete msg.timeRunEnd
+    delete msg.timeRunSpent
     console.log('change', msg)
 })
 // change { event: 'start', msg: 'running...' }

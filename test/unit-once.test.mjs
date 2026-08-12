@@ -1,5 +1,3 @@
-import fs from 'fs'
-import _ from 'lodash-es'
 import w from 'wsemi'
 import assert from 'assert'
 import WDwdataTweqod from '../src/WDwdataTweqod.mjs'
@@ -13,9 +11,8 @@ describe('once', function() {
 
         let ms = []
 
-        let j = fs.readFileSync('../_data/settings.json', 'utf8')
-        let st = JSON.parse(j)
-        let token = _.get(st, 'token')
+        //token, 因有提供funDownloadEqs故不會實際下載, 給予任意字串即可
+        let token = 'test-token'
 
         //fdTagRemove
         let fdTagRemove = `./_once_tagRemove`
@@ -95,7 +92,8 @@ describe('once', function() {
             fdResult,
             fdTaskCpActualSrc,
             fdTaskCpSrc,
-            // fdLog,
+            // srLog,
+            // useShowLog,
             funDownloadEqs,
             // funDownload,
             // funGetCurrent,
