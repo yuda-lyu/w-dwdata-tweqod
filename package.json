@@ -1,13 +1,13 @@
 {
   "name": "w-dwdata-tweqod",
-  "version": "1.0.66",
+  "version": "1.0.67",
   "main": "dist/w-dwdata-tweqod.umd.js",
   "dependencies": {
-    "w-dwdata-builder": "^1.1.20",
-    "wsemi": "^1.9.57"
+    "w-dwdata-builder": "^1.1.21",
+    "wsemi": "^1.9.58"
   },
   "devDependencies": {
-    "w-package-tools": "^1.1.27"
+    "w-package-tools": "^1.1.28"
   },
   "scripts": {
     "test": "mocha --parallel \"test/*.test.mjs\" --timeout 180000",
