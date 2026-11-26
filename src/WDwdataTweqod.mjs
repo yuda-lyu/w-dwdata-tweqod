@@ -255,7 +255,7 @@ let WDwdataTweqod = async(token, opt = {}) => {
     let treeFilesAndGetHashs = (fd) => {
 
         //vfps
-        let vfps = fsTreeFolder(fd, 1)
+        let vfps = fsTreeFolder(fd, { levelLimit: 1 })
         // console.log('vfps', vfps)
 
         //ltdtHash
@@ -371,7 +371,7 @@ let WDwdataTweqod = async(token, opt = {}) => {
     let funGetCurrentDef = async() => {
 
         //vfps
-        let vfps = fsTreeFolder(fdDwCurrent, 1)
+        let vfps = fsTreeFolder(fdDwCurrent, { levelLimit: 1 })
         // console.log('vfps', vfps)
 
         //ltdtHashOld
