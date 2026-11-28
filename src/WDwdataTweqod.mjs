@@ -26,7 +26,7 @@ import downloadEqs from './downloadEqs.mjs'
 /**
  * 基於檔案之下載台灣氣象署OpenData地震數據與任務建構器
  *
- * 執行階段最新hash數據放置於fdDwAttime，前次hash數據會於結束前自動備份至fdDwCurrent
+ * 執行階段最新hash數據放置於fdDwAttime，結束前只把本輪處理成功之項更新至fdDwCurrent(全部成功時為完全同步；處理失敗或未處理之項維持前次內容、下輪重試；本輪取消時不更新)，見w-dwdata-builder
  *
  * 執行階段最新數據放置於fdResult，前次數據會另存備份放置於fdResultTemp，於結束前會將fdResultTemp清空
  *
@@ -41,7 +41,7 @@ import downloadEqs from './downloadEqs.mjs'
  * @param {String} [opt.fdResult=`./_result`] 輸入已下載數據所連動生成數據資料夾字串，預設`./_result`
  * @param {String} [opt.fdTaskCpActualSrc='./_taskCpActualSrc'] 輸入任務狀態之來源端完整資料夾字串，預設'./_taskCpActualSrc'
  * @param {String} [opt.fdTaskCpSrc='./_taskCpSrc'] 輸入任務狀態之來源端資料夾字串，預設'./_taskCpSrc'
- * @param {Object} [opt.srLog=null] 輸入事件紀錄物件，需提供函數info、warn與error，各接收一紀錄物件，供偵測數據變更時紀錄各階段事件，未提供時不進行紀錄，其中warn目前保留未使用，預設null
+ * @param {Object} [opt.srLog=null] 輸入事件紀錄物件，需提供函數info、warn與error，各接收一紀錄物件，供偵測數據變更時紀錄各階段事件，未提供時不進行紀錄，warn用於逐項處理有失敗之彙總(fail-items-stage-main)與更新fdDwCurrent時未套用之項(move-data-to-current)，預設null
  * @param {Boolean} [opt.useShowLog=true] 輸入是否於偵測過程將錯誤與取消訊息輸出至console布林值，預設true
  * @param {Function} [opt.funDownloadEqs=null] 輸入自定義下載地震數據函數，回傳資料陣列，預設null
  * @param {Function} [opt.funDownload=null] 輸入當前下載數據hash之函數，回傳資料陣列，預設null
